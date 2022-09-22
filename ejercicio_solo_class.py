@@ -46,6 +46,7 @@ class Jugador(Personajes):
         self.total_atk = self.daño + random.randrange(0, 10)
         print('El ataque fue de: ',self.total_atk)
         return self.total_atk
+    
     def energia1(self):
         self.total_energy = self.energia - 20
         return self.total_energy
@@ -103,86 +104,92 @@ while opc != 3:
     print('-' * 50)
     help()
     opc = int(input('Ingrese su opccion opcion: '))
-    nomb_j1 = input('Ingrese el nombre del jugador 1: ')
-    print('_' * 50)
-    nomb_j2 = input('Ingrese el nombre del jugador 2: ')
-    print('_' * 50)
-    elementos = ['Agua', 'Tierra', 'Fuego']
-    elemento1 = random.choice(elementos)
-    vida = 100
-    daño = 40
-    energia = 100
-    print('/' * 50)
-    print('Estadisticas del jugador : ',nomb_j1)
-    j1 = Jugador(elemento1, vida, daño, energia)
-    
-    print('Elemento: ',j1.elemento,'\nVida Base: ',j1.vida,'\nDaño Base: ',j1.daño,'\nEnergia Base: ',j1.energia)
-    atk1 = j1.ataque1()
-    nrg1 = j1.energia1()
-    #vida_jugador1 = j1.vida
-    #vida_restantej2 = vida - atk1
-    #print('vida jugador2: ', vida_restantej2)
-    #print('El jugador 1 tiene: ',nrg1, 'de energia.')
-    print('-' * 50)
-    print('Estadisticas del jugador 2: ')
-    elemento2 = random.choice(elementos)
-    j2 = Jugador(elemento2, vida, daño, energia)
-    print('Elemento: ',j2.elemento,'\nVida Base: ',j2.vida,'\nDaño Base: ',j2.daño,'\nEnergia Base: ',j2.energia)
-    print(j2.elemento, j2.vida, j2.daño, j2.energia)
-    atk2 = j2.ataque1()
-    nrg2 = j2.energia1()
-    #vida_jugador2 = j2.vida
-    #vida_restantej1 = vida - atk2
-    #print('vida jugador1: ', vida_restantej1)
-    #print('El jugador 2 tiene: ',nrg2, 'de energia.')
-    print('-' * 50)
-    while vida_jugador1 != 0 or vida_jugador2 != 0:
-        print('='*50)
-        print('Empezamos!')
+    if opc == 1:
+        nomb_j1 = input('Ingrese el nombre del jugador 1: ')
+        print('_' * 50)
+        nomb_j2 = input('Ingrese el nombre del jugador 2: ')
+        print('_' * 50)
+        elementos = ['Agua', 'Tierra', 'Fuego']
+        elemento1 = random.choice(elementos)
+        vida = 100
+        daño = 40
+        energia = 100
+        print('/' * 50)
+        print('Estadisticas del jugador : ',nomb_j1)
+        j1 = Jugador(elemento1, vida, daño, energia)
         
-        if elemento1 == elemento2:
-            print('Son del mismo elemento')
-            vida_jugador1 = vida_jugador1 - atk2
-            j2.energia1()
-            vida_jugador2 = vida_jugador2 - atk1
-            j1.energia1()      
-        elif elemento1 != elemento2:
-            if elemento1 == 'Agua' and elemento2 == 'Fuego':
-                print('Ataque Efectivo')
-                vida_jugador2 = vida_jugador2 - (atk1 + j1.efectividad())
-                j1.energia1()
-                print('La vida restante de ', nomb_j2, 'es: ', vida_jugador2)
-                print('+++',j1.efectividad())
-            elif elemento1 == 'Agua' and elemento2 == 'Tierra':
-                print('Ataque Efectivo')
-                vida_jugador1 = vida_jugador1 - (atk2 + j2.efectividad())
+        print('Elemento: ',j1.elemento,'\nVida Base: ',j1.vida,'\nDaño Base: ',j1.daño,'\nEnergia Base: ',j1.energia)
+        atk1 = j1.ataque1()
+        nrg1 = j1.energia1()
+        vida_jugador1 = j1.vida
+        #vida_restantej2 = vida - atk1
+        #print('vida jugador2: ', vida_restantej2)
+        #print('El jugador 1 tiene: ',nrg1, 'de energia.')
+        print('-' * 50)
+        print('Estadisticas del jugador 2: ')
+        elemento2 = random.choice(elementos)
+        j2 = Jugador('Agua', 100, 40, 100)
+        print('Elemento: ',j2.elemento,'\nVida Base: ',j2.vida,'\nDaño Base: ',j2.daño,'\nEnergia Base: ',j2.energia)
+        print(j2.elemento, j2.vida, j2.daño, j2.energia)
+        atk2 = j2.ataque1()
+        nrg2 = j2.energia1()
+        vida_jugador2 = j2.vida
+        #vida_restantej1 = vida - atk2
+        #print('vida jugador1: ', vida_restantej1)
+        #print('El jugador 2 tiene: ',nrg2, 'de energia.')
+        print('-' * 50)
+        
+        while vida_jugador1 != 0 or vida_jugador2 != 0:
+            print('='*50)
+            print('Empezamos!')
+            
+            if elemento1 == elemento2:
+                print('Son del mismo elemento')
+                vida_jugador1 = vida_jugador1 - atk2
                 j2.energia1()
-                print('La vida restante de ', nomb_j1,'es: ', vida_jugador1)
-                print('---',j2.efectividad())
-                
-            elif elemento1 == 'Fuego' and elemento2 == 'Tierra':
-                print('Ataque efectivo')
-                j1.energia1()
-                vida_jugador2 = vida_jugador2 - (atk1 + j1.efectividad())
-                print('La vida restante de ', nomb_j2,'es: ', vida_jugador2)
-                print('+++', j1.efectividad)
-            elif elemento1 == 'Fuego' and elemento2 == 'Agua':
-                print('Ataque Efectivo')
-                j2.energia1()
-                vida_jugador1 = vida_jugador1 - (atk2 + j2.efectividad())
-                print('La vida restante de ', nomb_j1,'es: ', vida_jugador1)
-                print('---', j2.efectividad())
-                
-            elif elemento1 == 'Tierra' and elemento2 == 'Fuego':
-                print('Ataque efectivo')
-                j2.energia1()
-                vida_jugador1 = vida_jugador1 - (atk2 + j1.efectividad())
-                print('La vida restante de ', nomb_j1,'es: ', vida_jugador1)
-                print('---', j2.efectividad())
-            elif elemento1 == 'Tierra' and elemento2 == 'Agua':
-                print('Ataque efectivo')
-                j1.energia1()
-                vida_jugador2 = vida_jugador2 - (atk1 + j1.efectividad())
-                print('La vida restante de ', nomb_j2,'es: ', vida_jugador2)
-                print('+++',j1.efectividad())
+                vida_jugador2 = vida_jugador2 - atk1
+                j1.energia1()      
+            elif elemento1 != elemento2:
+                if elemento1 == 'Agua' and elemento2 == 'Fuego':
+                    print('Ataque Efectivo')
+                    vida_jugador2 = vida_jugador2 - (atk1 + j1.efectividad())
+                    j1.energia1()
+                    print('La vida restante de ', nomb_j2, 'es: ', vida_jugador2)
+                    print('+++',j1.efectividad())
+                elif elemento1 == 'Agua' and elemento2 == 'Tierra':
+                    print('Ataque Efectivo')
+                    vida_jugador1 = vida_jugador1 - (atk2 + j2.efectividad())
+                    j2.energia1()
+                    print('La vida restante de ', nomb_j1,'es: ', vida_jugador1)
+                    print('---',j2.efectividad())
                     
+                elif elemento1 == 'Fuego' and elemento2 == 'Tierra':
+                    print('Ataque efectivo')
+                    j1.energia1()
+                    vida_jugador2 = vida_jugador2 - (atk1 + j1.efectividad())
+                    print('La vida restante de ', nomb_j2,'es: ', vida_jugador2)
+                    print('+++', j1.efectividad)
+                elif elemento1 == 'Fuego' and elemento2 == 'Agua':
+                    print('Ataque Efectivo')
+                    j2.energia1()
+                    vida_jugador1 = vida_jugador1 - (atk2 + j2.efectividad())
+                    print('La vida restante de ', nomb_j1,'es: ', vida_jugador1)
+                    print('---', j2.efectividad())
+                    
+                elif elemento1 == 'Tierra' and elemento2 == 'Fuego':
+                    print('Ataque efectivo')
+                    j2.energia1()
+                    vida_jugador1 = vida_jugador1 - (atk2 + j1.efectividad())
+                    print('La vida restante de ', nomb_j1,'es: ', vida_jugador1)
+                    print('---', j2.efectividad())
+                elif elemento1 == 'Tierra' and elemento2 == 'Agua':
+                    print('Ataque efectivo')
+                    j1.energia1()
+                    vida_jugador2 = vida_jugador2 - (atk1 + j1.efectividad())
+                    print('La vida restante de ', nomb_j2,'es: ', vida_jugador2)
+                    print('+++',j1.efectividad())
+                
+    elif opc == 2:
+        help()
+    else: 
+        print('Salir')
